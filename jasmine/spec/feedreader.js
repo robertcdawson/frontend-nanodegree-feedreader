@@ -19,26 +19,33 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-        // Ensure that each feed in the `allFeeds` object has a passed property defined
-        function testPropDefined(input, message) {
-            it(message, function() {
-                expect(input).toBeDefined();
-            });
-        }
-        // Ensure that each feed in the `allFeeds` object has a non-empty passed property value
-        function testPropNotEmpty(input, message) {
-            it(message, function() {
-                expect(input).not.toBe('');
-            });
-        }
+        // Ensure that each feed in the `allFeeds` object has a URL defined
+        it('has a URL defined', function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].url).toBeDefined();
+            }
+        });
 
-        // Loop through each feed in the allFeeds object and run tests
-        for (var i = 0; i < allFeeds.length; i++) {
-            testPropDefined(allFeeds[i].url, 'has a URL defined');
-            testPropNotEmpty(allFeeds[i].url, 'has a non-empty URL value');
-            testPropDefined(allFeeds[i].name, 'has a name defined');
-            testPropNotEmpty(allFeeds[i].name, 'has a non-empty name value');
-        }
+        // Ensure that each feed in the `allFeeds` object has a name defined
+        it('has a name defined', function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].name).toBeDefined();
+            }
+        });
+
+        // Ensure that each feed in the `allFeeds` object has a non-empty passed URL value
+        it('has a non-empty URL value', function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].url).not.toBe('');
+            }
+        });
+
+        // Ensure that each feed in the `allFeeds` object has a non-empty passed name value
+        it('has a non-empty name value', function() {
+            for (var i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].name).not.toBe('');
+            }
+        });
 
     });
 
@@ -46,20 +53,19 @@ $(function() {
     describe('The menu', function() {
 
         // Initialize menu variables
-        var menu_hidden = $('.slide-menu').css('transform');
-        var menu_icon_link = $('.menu-icon-link');
+        var menuHidden = $('.slide-menu').css('transform');
+        var menuIconLink = $('.menu-icon-link');
 
         // Ensure that the menu element is hidden by default
         it('is hidden by default', function() {
-            expect(menu_hidden).not.toBe('matrix(1, 0, 0, 1, 0, 0)');
+            expect(menuHidden).not.toBe('matrix(1, 0, 0, 1, 0, 0)');
         });
 
         // Ensure that the menu changes visibility when the menu icon is clicked
         it('toggles when clicked', function() {
-            var dfd = $.Deferred();
-            menu_icon_link.click();
+            menuIconLink.click();
             expect($('body').hasClass('menu-hidden')).toBe(false);
-            menu_icon_link.click();
+            menuIconLink.click();
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
