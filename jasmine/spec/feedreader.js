@@ -135,12 +135,6 @@ $(function() {
             done();
         });
 
-        afterEach(function(done) {
-            setTimeout(function(done) {
-                loadFeed(0, done);
-            }, 1000);
-        });
-
     });
 
 }());
