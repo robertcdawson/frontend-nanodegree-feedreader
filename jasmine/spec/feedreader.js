@@ -123,16 +123,25 @@ $(function() {
         var feed0, feed1;
 
         beforeEach(function(done){
-            loadFeed(0, done);
-            feed0 = $('.feed').html();
+            loadFeed(0, function() {
+                // Get initial feed content
+                feed0 = $('.feed').html();
+                // Load second feed
+                loadFeed(1, done); 
+            });
         });
 
         it("should change the content", function(done) {
-            loadFeed(1, done);
+            // Get second feed content
             feed1 = $('.feed').html();
-            expect(feed0).toBe(feed1);
-            loadFeed(0, done);
+            // Test that feed0 and feed1 (first and second feeds) are not the same
+            expect(feed0).not.toBe(feed1);
             done();
+        });
+
+        afterAll(function(done) {
+            // Reload initial feed
+            loadFeed(0, done); 
         });
 
     });
