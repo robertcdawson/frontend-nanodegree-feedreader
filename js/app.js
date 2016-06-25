@@ -41,8 +41,22 @@ function init() {
  * which will be called after everything has run successfully.
  */
  function loadFeed(id, cb) {
-     var feedUrl = allFeeds[id].url,
+     var feedUrl, feedName;
+     // If id is passed (i.e., not undefined), assign URL and name variables
+     if (id !== undefined) {
+         feedUrl = allFeeds[id].url;
          feedName = allFeeds[id].name;
+     }
+     // Else, if allFeeds is not empty, set URL and name to those of first array element
+     else {
+         if (allFeeds.length > 0) {
+             feedUrl = allFeeds[0].url,
+             feedName = allFeeds[0].name;
+         }
+         else {
+             console.log("Error: allFeeds array not found");
+         }
+     }
 
      $.ajax({
        type: "POST",
@@ -121,7 +135,11 @@ $(function() {
         var item = $(this);
 
         $('body').addClass('menu-hidden');
-        loadFeed(item.data('id'));
+
+        // Check for out-of-bound array access
+        if(item.data('id') <= allFeeds.length) {
+            loadFeed(item.data('id'));
+        }
         return false;
     });
 
